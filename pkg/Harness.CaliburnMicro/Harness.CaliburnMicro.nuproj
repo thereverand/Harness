@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|AnyCPU">
+      <Configuration>Debug</Configuration>
+      <Platform>AnyCPU</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|AnyCPU">
+      <Configuration>Release</Configuration>
+      <Platform>AnyCPU</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>bc3df514-9288-46fa-96c4-9ed8099a1da9</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NuProjPath Condition=" '$(NuProjPath)' == '' ">$(MSBuildExtensionsPath)\NuProj\</NuProjPath>
+  </PropertyGroup>
+  <Import Project="$(NuProjPath)\NuProj.props" Condition="Exists('$(NuProjPath)\NuProj.props')" />
+  <PropertyGroup Label="Configuration">
+    <Id>Harness.CaliburnMicro</Id>
+    <Version>0.1.0</Version>
+    <Title>Harness.CaliburnMicro</Title>
+    <Authors>thereverand</Authors>
+    <Owners>thereverand</Owners>
+    <Summary>Harness support for Caliburn Micro</Summary>
+    <Description>Harness support for Caliburn Micro</Description>
+    <ReleaseNotes>
+    </ReleaseNotes>
+    <ProjectUrl>
+    </ProjectUrl>
+    <LicenseUrl>
+    </LicenseUrl>
+    <Copyright>Copyright © 2016 Nick Daniels</Copyright>
+    <Tags>Harness,Caliburn,Micro</Tags>
+    <EmbedSourceFiles>true</EmbedSourceFiles>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Harness.CaliburnMicro.WPF\Harness.CaliburnMicro.WPF.csproj" />
+    <ProjectReference Include="..\..\src\Harness.CaliburnMicro\Harness.CaliburnMicro.csproj" />
+    <ProjectReference Include="..\Harness\Harness.nuproj" />
+  </ItemGroup>
+  <Import Project="$(NuProjPath)\NuProj.targets" />
+</Project>
