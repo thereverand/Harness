@@ -11,22 +11,18 @@ namespace Harness
         private static IProvider ServiceProvider { get; set; }
 
         public static void BuildFrom(
-            Assembly[] assemblies = null,
-            Type[] types = null,
-            Func<Type, object[], object> activator = null,
-            IProvider provider = null
+            IProvider provider
         )
         {
-            ServiceProvider = provider ?? new DefaultProvider(assemblies, types, activator);
-            foreach (var startup in ServiceProvider.GetAllServices<IStartup>())
-            {
-                startup.Startup();
-            }
+            ServiceProvider = provider;
+            foreach (var register in ServiceProvider.GetAllServices<IRegister>()) register.Register(ServiceProvider);
+            foreach (var startup in ServiceProvider.GetAllServices<IStartup>()) startup.Startup();
         }
 
         public static T Get<T>()
         {
             if (Values.ContainsKey(typeof(T))) return (T)Values[typeof(T)];
+
             try
             {
                 return ServiceProvider.GetService<T>();

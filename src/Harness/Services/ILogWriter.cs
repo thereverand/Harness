@@ -6,24 +6,14 @@ namespace Harness.Services
 {
     public interface ILogWriter
     {
-        void Log(string subject, string id, string source, string message);
+        void Log(string source, string message, Exception ex);
     }
 
     public class DebugLogWriter : ILogWriter
     {
-        public DebugLogWriter(IMessageService messaging)
+        public void Log(string source, string message, Exception ex = null)
         {
-            messaging.ReceiveMessage("logger", null, LogHandler);
-        }
-
-        public void Log(string subject, string id, string source, string message)
-        {
-            Debug.WriteLine($"{DateTime.Now.ToString(CultureInfo.InvariantCulture)} - {subject} > {id} : {source} : {message}");
-        }
-
-        private void LogHandler(string subject, object origin, Func<string, object> args)
-        {
-            Log(subject, $"{args("Id")}", $"{args("Source")}", $"{args("Message")}");
+            Debug.WriteLine($"{DateTime.Now.ToString(CultureInfo.InvariantCulture)} - {source} > {message} ! {ex?.Message}");
         }
     }
 }

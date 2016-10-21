@@ -55,18 +55,20 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DefaultProvider.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PropertyChangedBase.cs" />
+    <Compile Include="Runtime\AnchorType.cs" />
+    <Compile Include="Services\AssemblyResourceProvider.cs" />
     <Compile Include="Services\ILogWriter.cs" />
-    <Compile Include="Services\IMessageService.cs" />
     <Compile Include="Services\IProvider.cs" />
+    <Compile Include="Services\IRegister.cs" />
     <Compile Include="Services\IResourceProvider.cs" />
+    <Compile Include="Services\IResourceService.cs" />
     <Compile Include="Services\ISessionState.cs" />
     <Compile Include="Services\IStartup.cs" />
-    <Compile Include="Services\MessageService.cs" />
+    <Compile Include="Services\LifetimeScope.cs" />
+    <Compile Include="Services\ResourceProviderSet.cs" />
     <Compile Include="X.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

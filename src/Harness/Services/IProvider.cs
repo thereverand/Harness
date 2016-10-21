@@ -4,42 +4,27 @@ using System.Reflection;
 
 namespace Harness.Services
 {
-    public enum LifetimeScope
-    {
-        Default,
-        Instance,
-        PerRequest,
-        Singleton,
-    }
-
     public interface IProvider : IServiceProvider
     {
-        IProvider RegisterAll(Type serviceType, Assembly[] assemblies, Func<Type, bool> filter = null);
+        IProvider RegisterAll(Type serviceType, Assembly[] assemblies, LifetimeScope scope = LifetimeScope.Default, Func<Type, bool> filter = null);
 
-        IProvider RegisterAll<T>(Assembly[] assemblies, Func<Type, bool> filter = null);
+        IProvider RegisterAll<T>(Assembly[] assemblies, LifetimeScope scope = LifetimeScope.Default, Func<Type, bool> filter = null);
 
-        IProvider Register(
-            Type serviceType,
-            Type implementation = default(Type),
-            object instance = default(object),
-            string key = default(string),
-            LifetimeScope scope = LifetimeScope.Default,
-            Func<object> handler = default(Func<object>)
-        );
+        IProvider Register(Type serviceType, Type implementation, LifetimeScope scope = LifetimeScope.Default, string key = null);
 
-        IProvider Register<T>(
-            Type implementation = default(Type),
-            T instance = default(T),
-            string key = default(string),
-            LifetimeScope scope = LifetimeScope.Default,
-            Func<T> handler = default(Func<T>)
-        ) where T : class;
+        IProvider Register(Type serviceType, object instance, string key = null);
 
-        IProvider Register<T, TY>(
-            string key = default(string),
-            LifetimeScope scope = LifetimeScope.Default
-        ) where T : class
-          where TY : class;
+        IProvider Register(Type serviceType, Type implementation, Func<object> handler, string key = null);
+
+        IProvider Register<T>(Type implementation, LifetimeScope scope = LifetimeScope.Default, string key = null);
+
+        IProvider Register<T>(object instance, string key = null);
+
+        IProvider Register<T>(Type implementation, Func<T> handler, string key = null);
+
+        IProvider Register<T, TY>(LifetimeScope scope = LifetimeScope.Default, string key = null);
+
+        IProvider Register<T, TY>(Func<TY> handler, string key = null);
 
         IProvider AddRegistrar(Action<IProvider> registrar);
 

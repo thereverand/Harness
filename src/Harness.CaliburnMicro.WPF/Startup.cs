@@ -23,12 +23,13 @@ namespace Harness
             var provider = new SimpleServiceProvider(_container);
 
             provider
-                .Register<IServiceProvider>(instance: provider)
-                .AddRegistrar(CaliburCoreRegistrar.Register)
-                .AddRegistrar(CaliburnRegistrar.Register);
+                .Register<IServiceProvider>(provider)
+                .AddRegistrar(new CaliburCoreRegistrar().Register)
+                .AddRegistrar(new CaliburnRegistrar().Register);
+
             Register(provider);
 
-            X.BuildFrom(provider: provider);
+            X.BuildFrom(provider);
         }
 
         protected override object GetInstance(Type service, string key)

@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace Harness
 {
-    public class SimpleServiceProvider : DefaultProvider
+    public class SimpleServiceProvider : IProvider
     {
         private readonly SimpleContainer _container;
 
@@ -16,45 +16,31 @@ namespace Harness
             _container = container;
         }
 
-        public override IProvider RegisterAll(Type serviceType, Assembly[] assemblies, Func<Type, bool> filter = null)
+        public IProvider RegisterAll(Type serviceType, Assembly[] assemblies, LifetimeScope scope = LifetimeScope.Default, Func<Type, bool> filter = default(Func<Type, bool>))
         {
-            if (filter == default(Func<Type, bool>)) filter = t => true;
             foreach (var a in assemblies)
             {
-                var ts = a.ExportedTypes.Where(filter);
-                foreach (var t in ts)
+                var types = a.ExportedTypes.Where(serviceType.IsAssignableFrom);
+
+                // Filter Func handles it.
+                // ReSharper disable once AssignNullToNotNullAttribute
+                var validTypes = filter == default(Func<Type, bool>) ? types : types.Where(filter);
+                foreach (var t in validTypes)
                 {
-                    _container.RegisterPerRequest(serviceType, null, t);
+                    Register(serviceType, t, scope);
                 }
             }
             return this;
         }
 
-        public override IProvider RegisterAll<T>(Assembly[] assemblies, Func<Type, bool> filter = null)
+        public IProvider RegisterAll<T>(Assembly[] assemblies, LifetimeScope scope = LifetimeScope.Default, Func<Type, bool> filter = null)
         {
-            RegisterAll(typeof(T), assemblies, filter);
+            RegisterAll(typeof(T), assemblies, scope, filter);
             return this;
         }
 
-        public override IProvider Register(
-            Type serviceType,
-            Type implementation = default(Type),
-            object instance = default(object),
-            string key = default(string),
-            LifetimeScope scope = LifetimeScope.Default,
-            Func<object> handler = default(Func<object>))
+        public IProvider Register(Type serviceType, Type implementation, LifetimeScope scope = LifetimeScope.Default, string key = null)
         {
-            if (instance != default(object))
-            {
-                _container.RegisterInstance(serviceType, key, instance);
-                return this;
-            }
-            if (handler != default(Func<object>))
-            {
-                _container.RegisterHandler(serviceType, key, c => handler());
-                return this;
-            }
-
             switch (scope)
             {
                 case LifetimeScope.Default:
@@ -76,38 +62,70 @@ namespace Harness
             return this;
         }
 
-        public override IProvider Register<T>(
-            Type implementation = default(Type),
-            T instance = default(T),
-            string key = default(string),
-            LifetimeScope scope = LifetimeScope.Default,
-            Func<T> handler = default(Func<T>))
+        public IProvider Register(Type serviceType, object instance, string key = null)
         {
-            Register(typeof(T), implementation, instance, key, scope);
+            _container.RegisterInstance(serviceType, key, instance);
             return this;
         }
 
-        public override object GetService(Type serviceType)
+        public IProvider Register(Type serviceType, Type implementation, Func<object> handler, string key = null)
+        {
+            _container.RegisterHandler(serviceType, key, c => handler());
+            return this;
+        }
+
+        public IProvider Register<T>(Type implementation, LifetimeScope scope = LifetimeScope.Default, string key = null)
+        {
+            return Register(typeof(T), implementation, scope, key);
+        }
+
+        public IProvider Register<T>(object instance, string key = null)
+        {
+            return Register(typeof(T), instance, key);
+        }
+
+        public IProvider Register<T>(Type implementation, Func<T> handler, string key = null)
+        {
+            return Register(typeof(T), implementation, () => handler(), key);
+        }
+
+        public IProvider Register<T, TY>(LifetimeScope scope = LifetimeScope.Default, string key = null)
+        {
+            return Register(typeof(T), typeof(TY), scope, key);
+        }
+
+        public IProvider Register<T, TY>(Func<TY> handler, string key = null)
+        {
+            return Register(typeof(T), typeof(TY), () => handler(), key);
+        }
+
+        public IProvider AddRegistrar(Action<IProvider> registrar)
+        {
+            registrar(this);
+            return this;
+        }
+
+        public object GetService(Type serviceType)
         {
             return _container.GetInstance(serviceType, null);
         }
 
-        public override object GetService(Type serviceType, string key)
+        public object GetService(Type serviceType, string key)
         {
             return _container.GetInstance(serviceType, key);
         }
 
-        public override T GetService<T>(string key = null)
+        public T GetService<T>(string key = null)
         {
             return _container.GetInstance<T>(key);
         }
 
-        public override IEnumerable<object> GetAllServices(Type serviceType)
+        public IEnumerable<object> GetAllServices(Type serviceType)
         {
             return _container.GetAllInstances(serviceType);
         }
 
-        public override IEnumerable<T> GetAllServices<T>()
+        public IEnumerable<T> GetAllServices<T>()
         {
             return _container.GetAllInstances<T>();
         }

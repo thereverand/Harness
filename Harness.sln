@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{40DD4E5F-DCF5-40CF-A421-3388B0DEC224}"
 EndProject
@@ -18,6 +18,10 @@ EndProject
 Project("{FF286327-C783-4F7A-AB73-9BCBAD0D4460}") = "Harness", "pkg\Harness\Harness.nuproj", "{485617CE-8594-4593-BF89-9D9889F1660A}"
 EndProject
 Project("{FF286327-C783-4F7A-AB73-9BCBAD0D4460}") = "Harness.CaliburnMicro", "pkg\Harness.CaliburnMicro\Harness.CaliburnMicro.nuproj", "{BC3DF514-9288-46FA-96C4-9ED8099A1DA9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Labs", "Labs", "{9F133474-FC6C-41F5-9920-F4607E06AF33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Harness.Labs", "Harness.Labs\Harness.Labs.csproj", "{EF9405BA-905C-44BF-A543-419452B72154}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,6 +71,12 @@ Global
 		{BC3DF514-9288-46FA-96C4-9ED8099A1DA9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BC3DF514-9288-46FA-96C4-9ED8099A1DA9}.Release|x64.ActiveCfg = Release|Any CPU
 		{BC3DF514-9288-46FA-96C4-9ED8099A1DA9}.Release|x64.Build.0 = Release|Any CPU
+		{EF9405BA-905C-44BF-A543-419452B72154}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF9405BA-905C-44BF-A543-419452B72154}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{EF9405BA-905C-44BF-A543-419452B72154}.Debug|x64.Build.0 = Debug|Any CPU
+		{EF9405BA-905C-44BF-A543-419452B72154}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF9405BA-905C-44BF-A543-419452B72154}.Release|x64.ActiveCfg = Release|Any CPU
+		{EF9405BA-905C-44BF-A543-419452B72154}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -77,5 +87,6 @@ Global
 		{C2FC99E6-2255-41F5-B031-E48B7ACDC343} = {2B3D2DD5-9485-4891-9183-990BE731518D}
 		{485617CE-8594-4593-BF89-9D9889F1660A} = {0BA2175A-403C-4A09-9A8C-F37E60D4477B}
 		{BC3DF514-9288-46FA-96C4-9ED8099A1DA9} = {0BA2175A-403C-4A09-9A8C-F37E60D4477B}
+		{EF9405BA-905C-44BF-A543-419452B72154} = {9F133474-FC6C-41F5-9920-F4607E06AF33}
 	EndGlobalSection
 EndGlobal

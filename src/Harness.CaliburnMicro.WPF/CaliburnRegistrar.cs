@@ -3,9 +3,9 @@ using Harness.Services;
 
 namespace Harness
 {
-    public static class CaliburnRegistrar
+    public class CaliburnRegistrar
     {
-        public static void Register(IProvider provider)
+        public void Register(IProvider provider)
         {
             provider.Register<IWindowManager, WindowManager>();
         }
